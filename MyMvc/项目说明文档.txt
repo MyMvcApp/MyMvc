@@ -9,3 +9,5 @@ MyMvc.IRepository  对应的是Repository的接口
 MyMvc.Repository  对应的是数据操作层
 <Repository对应前端Repository,RepositoryEnd对应后台Repository>
 这个项目是以Asp.net MVc4+EF5,面向接口编程为特点的项目
+
+前后台的View是分开建立的，测试的数据库用LocalDB，正式的数据库用Sql2008
