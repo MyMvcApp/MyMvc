@@ -1,0 +1,22 @@
+﻿Git是一个分布式的源代码管理器
+1.先在www.github.com网站注册一个github帐号
+2.在本地安装一个github客户端（https://code.google.com/p/msysgit/downloads/detail?name=Git-1.8.4-preview20130916.exe&can=2&q=）
+下面是每一种操作的命令
+添加操作：
+有了新的文件添加
+git add -A
+git commit -am "描述"
+git push origin master
+修改文件
+git commit -am "描述"
+git push origin master
+删除文件
+git rm dir(对应删除文件的路径)
+git commit -am "描述"
+git push origin master
+更新代码
+git pull origin master
+
+从现有的Repository中下载代码到本地
+git clone url (https://github.com/MyMvcApp/MyMvc.git)
+期间会输入用户名和密码：对应的是github的用户名和密码。
