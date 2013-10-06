@@ -5,7 +5,8 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
-
+using MyMvc.Context;
+using System.Data.Entity;
 namespace MyMvcEnd
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -19,6 +20,9 @@ namespace MyMvcEnd
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+#if DEBUG
+            Database.SetInitializer<MyMvcContext>(new MyMvcInitializer());
+#endif
         }
     }
 }

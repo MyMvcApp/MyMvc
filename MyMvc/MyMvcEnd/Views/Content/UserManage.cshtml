@@ -1,0 +1,142 @@
+﻿@model MyMvc.Models.ModelsEnd.UserModel
+
+<table id="dg" class="easyui-datagrid" border="0" pagination="true" fit="true"
+    data-options="
+                singleSelect: true,
+                toolbar: '#tb',
+                onClickRow: onClickRow,
+                remoteSort:false,
+                multiSort:false,
+                data:[
+                    {'userid':'1','Name':'吴明','Sex':'男','Phone':'18721987293','Address':'场中路239弄','Job':'主管'},
+                    {'userid':'2','Name':'朱仁火','Sex':'男','Phone':'15189023923','Address':'场中路239弄','Job':'路人'},
+                    {'userid':'3','Name':'郭晶晶','Sex':'女','Phone':'18347732633','Address':'场中路239弄','Job':'路人'}
+                ]
+            ">
+    <thead>
+        <tr>
+            <th data-options="field:'userid',width:80,sortable:true">员工ID</th>
+            <th data-options="field:'Name',width:80,sortable:true">姓名</th>
+            <th data-options="field:'Sex',width:80,sortable:true">性别</th>
+            <th data-options="field:'Phone',width:80,sortable:true">电话</th>
+            <th data-options="field:'Address',width:220,sortable:true">住址</th>
+            <th data-options="field:'Job',width:80,sortable:true">职位</th>
+        </tr>
+    </thead>
+</table>
+<div id="tb" style="height: auto">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addit()">添加</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editit()">修改</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+</div>
+<div id="w" class="easyui-window" title="员工信息" data-options="modal:true,closed:true,iconCls:'icon-save',inline:true"
+    style="width: 300px; height: 300px; padding: 10px;">
+    <div style="padding: 10px 0 10px 35px">
+        @using (Ajax.BeginForm("UserManage", "Content", new AjaxOptions { OnSuccess = "Success", OnFailure = "Failure" }))
+        {
+            <table>
+                <tr>
+                    <td>@Html.LabelFor(m => m.Name)</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.Name, new { @class = "required" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(m => m.Job)</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.Job, new { @class = "required" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(m => m.Phone)</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "required digits1" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(m => m.Sex)</td>
+                    <td>
+                        @Html.DropDownListFor(m => m.Sex, new[]{
+                                new SelectListItem(){Text = "男",Value = "男", Selected = true },
+                                new SelectListItem(){Text = "女",Value = "女" }},
+                                new { @name = "Sex" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(m => m.Address)</td>
+                    <td>
+                        @Html.TextAreaFor(m => m.Address)
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+    <div style="text-align: center; padding: 5px">
+        <a href="javascript:void(0)" data-options="iconCls:'icon-ok'" class="easyui-linkbutton" onclick="submitForm()">保存</a>
+        <a href="javascript:void(0)" data-options="iconCls:'icon-cancel'" class="easyui-linkbutton" onclick="clearForm()">清空</a>
+    </div>
+</div>
+<script type="text/javascript">
+    var objForm = document.forms[0];
+    $(objForm).validate();
+    var editIndex = undefined;
+    var selectRow = undefined;
+    var rowIndex = undefined;
+
+    function onClickRow(index) {
+        selectRow = $('#dg').datagrid('getSelected');
+        $('#dg').datagrid('getRowIndex', index);
+        rowIndex = index;
+        if (selectRow != undefined) {
+            editIndex = selectRow['userid'];
+        }
+    }
+    function removeit() {
+        if (editIndex == undefined) {
+            $.messager.alert('错误', '当前未选中行', 'error');
+            return;
+        }
+        $.messager.confirm('提醒', '确定要删除此项吗?', function (r) {
+            if (r) {
+                $('#dg').datagrid('deleteRow', rowIndex);
+                //editIndex = undefined;
+            }
+        });
+    }
+    function addit() {
+        clearvalidatorinfo();
+        $(objForm).form('clear');
+        $('#w').window('open');
+    }
+    function editit() {
+        if (editIndex == undefined) {
+            $.messager.alert('错误', '当前未选中行', 'error');
+            return;
+        }
+
+        clearvalidatorinfo();
+        $(objForm).form('clear');
+        $(objForm).form('load', selectRow);
+        $(objForm).validate();
+        $('#w').window('open');
+    }
+    function clearvalidatorinfo() {
+        $('.errorvalidator').each(function () {
+            $(this).empty();
+        });
+    }
+    function Success(data) {
+        $.messager.alert('提示', '操作成功', 'success');
+        $('#w').window('close');
+        $('#dg').datagrid('reload');
+    }
+    function Failure() {
+        alert("失败");
+    }
+    function submitForm() {
+        $(objForm).submit();
+    }
+    function clearForm() {
+        $(objForm).form('clear');
+    }
+</script>

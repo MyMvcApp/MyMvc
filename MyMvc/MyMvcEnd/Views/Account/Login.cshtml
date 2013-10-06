@@ -1,0 +1,57 @@
+﻿@model MyMvc.Models.ModelsEnd.LoginModel
+
+@{
+    Layout = "~/Views/Shared/_Login.cshtml";
+}
+
+@{
+    ViewBag.Title = "My";
+}
+<div id="loginWin" class="easyui-window" title="登录" data-options="modal:true,collapsible:false,minimizable:false,maximizable:false,closable:false" style="width: 350px; height: auto; padding: 5px;">
+    <div class="easyui-layout">
+        @using (Html.BeginForm())
+        {
+            <div style="padding: 5px; background: #fff; border: 1px solid #ccc;">
+                <table style="width: 100%">
+                    <tr>
+                        <td style="width: 100px; text-align: right">
+                            @Html.LabelFor(m => m.UserName)</td>
+                        <td>@Html.TextBoxFor(m => m.UserName, new { @class = "required" })</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 100px; text-align: right">
+                            @Html.LabelFor(m => m.Password)</td>
+                        <td>@Html.PasswordFor(m => m.Password, new { @class = "required" })</td>
+                    </tr>
+                </table>
+                <div style="padding: 5px 0; text-align: center; color: red;" id="showMsg">
+                    @Html.ValidationSummary(true)
+                </div>
+            </div>
+        }
+        <div style="text-align: right; padding: 5px 0;">
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="submitForm()">登录</a>
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="clearForm()">重置</a>
+        </div>
+    </div>
+</div>
+<script>
+    var objForm = document.forms[0];
+    $(objForm).validate();
+
+    function submitForm() {
+        $(objForm).submit();
+    }
+    function clearForm() {
+        $('#showMsg').html('<div class="validation-summary-errors"><ul><li>请填写正确的用户名密码。</li></ul></div>');
+        $(objForm).form('clear');
+    }
+
+    $(document).keydown(function (event) {
+        switch (event.keyCode) {
+            case 13:
+                submitForm();
+                break;
+        }
+    });
+</script>

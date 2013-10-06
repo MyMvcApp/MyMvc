@@ -10,22 +10,16 @@ namespace MyMvc.Controllers.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "修改此模板以快速启动你的 ASP.NET MVC 应用程序。";
+            if (Session["admin"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Menu()
         {
-            ViewBag.Message = "你的应用程序说明页。";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "你的联系方式页。";
-
             return View();
         }
     }

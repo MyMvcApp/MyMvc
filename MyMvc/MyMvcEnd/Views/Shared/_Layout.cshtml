@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - 应用程序后台</title>
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/themes/bootstrap/easyui.css")
+    @Styles.Render("~/Content/themes/icon.css")
+    @Styles.Render("~/Content/themes/demo.css")
+    @Scripts.Render("~/Scripts/jquery-1.7.1.min.js")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+    @Scripts.Render("~/Scripts/jquery.easyui.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.js")
+    @Scripts.Render("~/Scripts/dealmenu.js")
+</head>
+<body class="easyui-layout">
+    <div data-options="region:'north'" style="height: 50px"></div>
+    <div data-options="region:'west',split:true" title="导航菜单" style="width: 175px;">
+        @Html.Partial("Menu")
+    </div>
+    <div id="body" data-options="region:'center',title:''">
+        @RenderBody()
+    </div>
+    <div data-options="region:'south',split:true" style="height: 30px;"></div>
+    <div id="mm" class="easyui-menu" style="width: 150px;">
+        <div id="mm-tabupdate">刷新</div>
+        <div class="menu-sep"></div>
+        <div id="mm-tabclose">关闭</div>
+        <div id="mm-tabcloseall">全部关闭</div>
+        <div id="mm-tabcloseother">除此之外全部关闭</div>
+        <div class="menu-sep"></div>
+        <div id="mm-tabcloseright">当前页右侧全部关闭</div>
+        <div id="mm-tabcloseleft">当前页左侧全部关闭</div>
+        <div class="menu-sep"></div>
+        <div id="mm-exit">退出</div>
+    </div>
+</body>
+</html>
