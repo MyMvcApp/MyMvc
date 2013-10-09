@@ -245,7 +245,7 @@
             number: "请输入一个有效的数字.", //请输入一个有效的数字
             numberDE: "Bitte geben Sie eine Nummer ein.",
             digits: "<span style='color:red;'>输入大于0的整数</span>", //请只输入数字
-            digits1: "<span style='color:red;'>输入整数</span>", //请只输入数字
+            digits1: "<span style='color:red;'>输入数字</span>", //请只输入数字
             digits2: "<span style='color:red;'>不大于100(0.00)</span>",
             checkMultiple: "必须是100的倍数",
             creditcard: "Please enter a valid credit card number.", //输入一个有效的信用卡号码

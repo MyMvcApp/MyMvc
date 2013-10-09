@@ -1,4 +1,4 @@
-﻿@model MyMvc.Models.ModelsEnd.LoginModel
+﻿@model MyMvc.Models.ModelsEnd.AdminUser
 
 @{
     Layout = "~/Views/Shared/_Login.cshtml";
@@ -7,7 +7,13 @@
 @{
     ViewBag.Title = "My";
 }
-<div id="loginWin" class="easyui-window" title="登录" data-options="modal:true,collapsible:false,minimizable:false,maximizable:false,closable:false" style="width: 350px; height: auto; padding: 5px;">
+<div id="loginWin" class="easyui-window" title="登录" style="width: 350px; height: auto; padding: 5px;"
+    data-options="
+                modal:true,
+                collapsible:false,
+                minimizable:false,
+                maximizable:false,
+                closable:false">
     <div class="easyui-layout">
         @using (Html.BeginForm())
         {
@@ -15,13 +21,13 @@
                 <table style="width: 100%">
                     <tr>
                         <td style="width: 100px; text-align: right">
-                            @Html.LabelFor(m => m.UserName)</td>
-                        <td>@Html.TextBoxFor(m => m.UserName, new { @class = "required" })</td>
+                            帐号：</td>
+                        <td>@Html.TextBoxFor(m => m.AdminName, new { @class = "required" })</td>
                     </tr>
                     <tr>
                         <td style="width: 100px; text-align: right">
-                            @Html.LabelFor(m => m.Password)</td>
-                        <td>@Html.PasswordFor(m => m.Password, new { @class = "required" })</td>
+                            密码：</td>
+                        <td>@Html.PasswordFor(m => m.AdminPwd, new { @class = "required" })</td>
                     </tr>
                 </table>
                 <div style="padding: 5px 0; text-align: center; color: red;" id="showMsg">
@@ -31,7 +37,7 @@
         }
         <div style="text-align: right; padding: 5px 0;">
             <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="submitForm()">登录</a>
-            <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="clearForm()">重置</a>
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-reload'" href="javascript:void(0)" onclick="clearForm()">重置</a>
         </div>
     </div>
 </div>
@@ -43,7 +49,8 @@
         $(objForm).submit();
     }
     function clearForm() {
-        $('#showMsg').html('<div class="validation-summary-errors"><ul><li>请填写正确的用户名密码。</li></ul></div>');
+        $('#showMsg').html('');
+        $('.window-shadow').css('display', 'none');
         $(objForm).form('clear');
     }
 

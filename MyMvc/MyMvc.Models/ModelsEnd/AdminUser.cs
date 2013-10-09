@@ -35,4 +35,17 @@ namespace MyMvc.Models.ModelsEnd
 
         public string QQ { get; set; }
     }
+
+    public class UpdatePwdParm
+    {
+        /// <summary>
+        /// 旧密码
+        /// </summary>
+        public string AdminPwd { get; set; }
+
+        /// <summary>
+        /// 新密码
+        /// </summary>
+        public string AdminNewPwd { get; set; }
+    }
 }

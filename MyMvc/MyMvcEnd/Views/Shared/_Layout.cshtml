@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>@ViewBag.Title - 应用程序后台</title>
     <meta name="viewport" content="width=device-width" />
-    @Styles.Render("~/Content/themes/bootstrap/easyui.css")
+    @Styles.Render("~/Content/themes/default/easyui.css")
     @Styles.Render("~/Content/themes/icon.css")
     @Styles.Render("~/Content/themes/demo.css")
     @Scripts.Render("~/Scripts/jquery-1.7.1.min.js")
@@ -15,14 +15,18 @@
     @Scripts.Render("~/Scripts/dealmenu.js")
 </head>
 <body class="easyui-layout">
-    <div data-options="region:'north'" style="height: 50px"></div>
+    <div data-options="region:'north'" style="height: 35px">
+        @Html.Partial("Top")
+    </div>
     <div data-options="region:'west',split:true" title="导航菜单" style="width: 175px;">
         @Html.Partial("Menu")
     </div>
     <div id="body" data-options="region:'center',title:''">
         @RenderBody()
     </div>
-    <div data-options="region:'south',split:true" style="height: 30px;"></div>
+    <div data-options="region:'south',split:true" style="height: 30px;">
+        @Html.Partial("Bottom")
+    </div>
     <div id="mm" class="easyui-menu" style="width: 150px;">
         <div id="mm-tabupdate">刷新</div>
         <div class="menu-sep"></div>
