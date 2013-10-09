@@ -426,9 +426,6 @@
     <Content Include="Content\themes\metro\window.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\dealmenu.js" />
-    <Content Include="Scripts\jquery-1.7.1.min.js" />
-    <Content Include="Scripts\jquery.easyui.min.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
