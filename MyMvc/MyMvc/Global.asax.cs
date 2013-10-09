@@ -21,9 +21,9 @@ namespace MyMvc
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-#if DEBUG
-            Database.SetInitializer<MyMvcContext>(new MyMvcInitializer());
-#endif
+//#if DEBUG
+//            Database.SetInitializer<MyMvcContext>(new MyMvcInitializer());
+//#endif
         }
     }
 }
