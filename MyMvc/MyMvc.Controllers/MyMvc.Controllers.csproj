@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdminUserController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PagedPeoPleController.cs" />
@@ -69,6 +68,10 @@
     <ProjectReference Include="..\MyMvc.ControllerTemplate\MyMvc.ControllerTemplate.csproj">
       <Project>{a37fb939-705e-459e-9df3-e1067a0e8ed7}</Project>
       <Name>MyMvc.ControllerTemplate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyMvc.Helper\MyMvc.Helper.csproj">
+      <Project>{0972c301-5d37-43e8-bb56-fa992d237654}</Project>
+      <Name>MyMvc.Helper</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyMvc.IRepository\MyMvc.IRepository.csproj">
       <Project>{89ab9485-6a80-4b1f-b9d8-45be86365f6e}</Project>

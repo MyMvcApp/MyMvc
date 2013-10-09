@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace MyMvc.Helper
 {
-    public class Class1
+    public class Result
     {
+        public string code { get; set; }
+
+        public string message { get; set; }
     }
 }

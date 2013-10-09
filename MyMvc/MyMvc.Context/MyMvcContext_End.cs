@@ -13,7 +13,5 @@ namespace MyMvc.Context
     public partial class MyMvcContext
     {
         public DbSet<AdminUser> AdminUser { get; set; }
-        public DbSet<LoginModel> LoginModel { get; set; }
-        public DbSet<UserModel> UserModel { get; set; }
     }
 }

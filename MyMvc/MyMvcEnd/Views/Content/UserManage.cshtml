@@ -1,4 +1,4 @@
-﻿@model MyMvc.Models.ModelsEnd.UserModel
+﻿@model MyMvc.Models.ModelsEnd.AdminUser
 
 <table id="dg" class="easyui-datagrid" border="0" pagination="true" fit="true"
     data-options="
@@ -7,20 +7,16 @@
                 onClickRow: onClickRow,
                 remoteSort:false,
                 multiSort:false,
-                data:[
-                    {'userid':'1','Name':'吴明','Sex':'男','Phone':'18721987293','Address':'场中路239弄','Job':'主管'},
-                    {'userid':'2','Name':'朱仁火','Sex':'男','Phone':'15189023923','Address':'场中路239弄','Job':'路人'},
-                    {'userid':'3','Name':'郭晶晶','Sex':'女','Phone':'18347732633','Address':'场中路239弄','Job':'路人'}
-                ]
-            ">
+                sortName:'AdminUserID',
+                url:'Content/GetUserList'">
     <thead>
         <tr>
-            <th data-options="field:'userid',width:80,sortable:true">员工ID</th>
-            <th data-options="field:'Name',width:80,sortable:true">姓名</th>
-            <th data-options="field:'Sex',width:80,sortable:true">性别</th>
-            <th data-options="field:'Phone',width:80,sortable:true">电话</th>
-            <th data-options="field:'Address',width:220,sortable:true">住址</th>
-            <th data-options="field:'Job',width:80,sortable:true">职位</th>
+            <th data-options="field:'AdminUserID',width:80,sortable:true">ID</th>
+            <th data-options="field:'RealName',width:80,sortable:true">姓名</th>
+            <th data-options="field:'AdminName',width:100,sortable:true">登录名</th>
+            <th data-options="field:'Telephone',width:100,sortable:true">电话</th>
+            <th data-options="field:'QQ',width:100,sortable:true">QQ</th>
+            <th data-options="field:'AdminType',width:80,sortable:true,formatter:formatter">管理员类型</th>
         </tr>
     </thead>
 </table>
@@ -29,43 +25,47 @@
     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editit()">修改</a>
     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
 </div>
-<div id="w" class="easyui-window" title="员工信息" data-options="modal:true,closed:true,iconCls:'icon-save',inline:true"
-    style="width: 300px; height: 300px; padding: 10px;">
+<div id="userWin" class="easyui-window" title="员工信息" data-options="modal:true,closed:true,iconCls:'icon-save',inline:true"
+    style="width: 350px; height: 250px; padding: 10px;">
     <div style="padding: 10px 0 10px 35px">
-        @using (Ajax.BeginForm("UserManage", "Content", new AjaxOptions { OnSuccess = "Success", OnFailure = "Failure" }))
+        @using (Ajax.BeginForm("UserManage", "Content",
+            new AjaxOptions { OnSuccess = "Success", OnFailure = "Failure" },
+            new { @id = "userForm"}))
         {
+            @Html.HiddenFor(m => m.AdminUserID)
             <table>
                 <tr>
-                    <td>@Html.LabelFor(m => m.Name)</td>
+                    <td>登录帐号:</td>
                     <td>
-                        @Html.TextBoxFor(m => m.Name, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.AdminName, new { @class = "required" })
                     </td>
                 </tr>
                 <tr>
-                    <td>@Html.LabelFor(m => m.Job)</td>
+                    <td>员工姓名：</td>
                     <td>
-                        @Html.TextBoxFor(m => m.Job, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.RealName, new { @class = "required" })
                     </td>
                 </tr>
                 <tr>
-                    <td>@Html.LabelFor(m => m.Phone)</td>
+                    <td>管理员类型：</td>
                     <td>
-                        @Html.TextBoxFor(m => m.Phone, new { @class = "required digits1" })
+                        @Html.DropDownListFor(m => m.AdminType, new[]{
+                                new SelectListItem(){Text = "超级管理员",Value = "0", Selected = true },
+                                new SelectListItem(){Text = "普通管理员",Value = "1" }},
+                                new { @name = "AdminType", @class = "required" })
                     </td>
                 </tr>
                 <tr>
-                    <td>@Html.LabelFor(m => m.Sex)</td>
+                    <td>手机号码：</td>
                     <td>
-                        @Html.DropDownListFor(m => m.Sex, new[]{
-                                new SelectListItem(){Text = "男",Value = "男", Selected = true },
-                                new SelectListItem(){Text = "女",Value = "女" }},
-                                new { @name = "Sex" })
+                        @Html.TextBoxFor(m => m.Telephone, new { @class = "digits1" })
                     </td>
                 </tr>
+
                 <tr>
-                    <td>@Html.LabelFor(m => m.Address)</td>
+                    <td>QQ号码：</td>
                     <td>
-                        @Html.TextAreaFor(m => m.Address)
+                        @Html.TextBoxFor(m => m.QQ, new { @class = "digits1" })
                     </td>
                 </tr>
             </table>
@@ -73,11 +73,11 @@
     </div>
     <div style="text-align: center; padding: 5px">
         <a href="javascript:void(0)" data-options="iconCls:'icon-ok'" class="easyui-linkbutton" onclick="submitForm()">保存</a>
-        <a href="javascript:void(0)" data-options="iconCls:'icon-cancel'" class="easyui-linkbutton" onclick="clearForm()">清空</a>
+        <a href="javascript:void(0)" data-options="iconCls:'icon-reload'" class="easyui-linkbutton" onclick="clearForm()">清空</a>
     </div>
 </div>
 <script type="text/javascript">
-    var objForm = document.forms[0];
+    var objForm = $('#userForm');
     $(objForm).validate();
     var editIndex = undefined;
     var selectRow = undefined;
@@ -88,7 +88,14 @@
         $('#dg').datagrid('getRowIndex', index);
         rowIndex = index;
         if (selectRow != undefined) {
-            editIndex = selectRow['userid'];
+            editIndex = selectRow['AdminUserID'];
+        }
+    }
+    function formatter(value, row, index) {
+        if (value == "0") {
+            return "超级管理员";
+        } else {
+            return "普通管理员";
         }
     }
     function removeit() {
@@ -98,15 +105,29 @@
         }
         $.messager.confirm('提醒', '确定要删除此项吗?', function (r) {
             if (r) {
-                $('#dg').datagrid('deleteRow', rowIndex);
-                //editIndex = undefined;
+                $.ajax({
+                    url: 'Content/DelUserById',
+                    type: "POST",
+                    data: 'id=' + editIndex,
+                    success: function (msg) {
+                        if (msg.code == "success") {
+                            $('#dg').datagrid('deleteRow', rowIndex);
+                            clearCacheData();
+                        } else {
+                            $.messager.alert('错误', '操作失败:' + msg.message, 'error');
+                        }
+                    },
+                    error: function (msg) {
+                        $.messager.alert('错误', '操作失败' + RegexErrorMsg(msg.responseText), 'error');
+                    }
+                });
             }
         });
     }
     function addit() {
         clearvalidatorinfo();
         $(objForm).form('clear');
-        $('#w').window('open');
+        $('#userWin').window('open');
     }
     function editit() {
         if (editIndex == undefined) {
@@ -118,20 +139,30 @@
         $(objForm).form('clear');
         $(objForm).form('load', selectRow);
         $(objForm).validate();
-        $('#w').window('open');
+        $('#userWin').window('open');
     }
     function clearvalidatorinfo() {
         $('.errorvalidator').each(function () {
             $(this).empty();
         });
     }
-    function Success(data) {
-        $.messager.alert('提示', '操作成功', 'success');
-        $('#w').window('close');
-        $('#dg').datagrid('reload');
+    function clearCacheData() {
+        editIndex = undefined;
+        selectRow = undefined;
+        rowIndex = undefined;
     }
-    function Failure() {
-        alert("失败");
+    function Success(data) {
+        if (data.code == "success") {
+            $.messager.alert('提示', '操作成功', 'success');
+            $('#userWin').window('close');
+            $('#dg').datagrid('reload');
+            clearCacheData();
+        } else {
+            $.messager.alert('提示', '操作失败:' + data.message, 'error');
+        }
+    }
+    function Failure(data) {
+        $.messager.alert('提示', '操作失败' + RegexErrorMsg(data.responseText), 'error');
     }
     function submitForm() {
         $(objForm).submit();

@@ -1,0 +1,101 @@
+﻿@model MyMvc.Models.ModelsEnd.UpdatePwdParm
+
+<div style="background: #D2E0F2;">
+    <table style="width:100%;">
+        <tr>
+            <td style="text-align: left; padding-left:5px">
+                <span>欢迎管理员：【<span style="color:red">@ViewBag.LoginName</span>】 登录系统</span>
+                <input type="hidden" id="adminId" value=""/>
+            </td>
+            <td style="text-align: right;">
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="updatepwd()">修改密码</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="exitsys()">安全退出</a>
+                <a href="javascript:void(0)" class="easyui-menubutton" data-options="menu:'#mm2',iconCls:'icon-help'">帮助</a>
+                <a href="javascript:void(0)" class="easyui-menubutton" data-options="menu:'#mm1'">关于</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="mm1" class="menu-content" style="background: #f0f0f0; padding: 10px; text-align: left">
+    <p style="font-size: 14px; color: #444;">系统开发中......</p>
+</div>
+<div id="mm2" style="width: 100px;">
+    <div>在线资讯</div>
+    <div>版本信息</div>
+    <div>意见申诉</div>
+</div>
+<div>
+    <div id="updatePwdWin" class="easyui-window" title="密码修改" data-options="modal:true,closed:true,iconCls:'icon-save'"
+    style="width: 350px; height: 180px; padding: 10px;">
+    <div style="padding: 10px 0 10px 35px">
+        @using (Ajax.BeginForm("UpdatePwd","Content","",
+            new AjaxOptions { OnSuccess = "Success", OnFailure = "Failure" },
+            new { @id = "updatePwdForm" }))
+        {
+            <table>
+                <tr>
+                    <td>旧密码:</td>
+                    <td>
+                        @Html.PasswordFor(m => m.AdminPwd, new { @class = "required" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>新密码：</td>
+                    <td>
+                        @Html.PasswordFor(m => m.AdminNewPwd, new { @class = "required" })
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+    <div style="text-align: center; padding: 5px">
+        <a href="javascript:void(0)" data-options="iconCls:'icon-ok'" class="easyui-linkbutton" onclick="submitForm()">保存</a>
+        <a href="javascript:void(0)" data-options="iconCls:'icon-reload'" class="easyui-linkbutton" onclick="clearForm()">清空</a>
+    </div>
+</div>
+</div>
+<script>
+    $('#updatePwdForm').validate();
+
+    function updatepwd() {
+        $('#updatePwdForm').form('clear');
+        $('#updatePwdWin').window('open');
+    }
+    function exitsys() {
+        $.messager.confirm('提醒', '确定要退出系统吗?', function (r) {
+            if (r) {
+                $.ajax({
+                    url: 'Account/Logout',
+                    type: "POST",
+                    success: function (msg) {
+                        if (msg.code == "success") {
+                            window.location.href = "Account/Login";
+                        } else {
+                            $.messager.alert('错误', '退出失败:' + msg.message, 'error');
+                        }
+                    },
+                    error: function (msg) {
+                        $.messager.alert('错误', '退出失败' + RegexErrorMsg(msg.responseText), 'error');
+                    }
+                });
+            }
+        });
+    }
+    function submitForm() {
+        $('#updatePwdForm').submit();
+    }
+    function clearForm() {
+        $('#updatePwdForm').form('clear');
+    }
+    function Success(data) {
+        if (data.code == "success") {
+            $.messager.alert('提示', '操作成功', 'success');
+            $('#updatePwdWin').window('close');
+        } else {
+            $.messager.alert('提示', '操作失败:' + data.message, 'error');
+        }
+    }
+    function Failure(msg) {
+        $.messager.alert('提示', '操作失败' + RegexErrorMsg(msg.responseText), 'error');
+    }
+</script>

@@ -143,7 +143,7 @@ function tabCloseEven() {
     $('#mm-tabcloseright').click(function () {
         var nextall = $('.tabs-selected').nextAll();
         if (nextall.length == 0) {
-            //msgShow('系统提示','后边没有啦~~','error');
+            //$.messager.alert('系统提示','后边没有啦~~','error');
             return false;
         }
         nextall.each(function (i, n) {
@@ -156,7 +156,7 @@ function tabCloseEven() {
     $('#mm-tabcloseleft').click(function () {
         var prevall = $('.tabs-selected').prevAll();
         if (prevall.length == 0) {
-            //msgShow('系统提示','到头了，前边没有啦~~','error');
+            //$.messager.alert('系统提示','到头了，前边没有啦~~','error');
             return false;
         }
         prevall.each(function (i, n) {
@@ -172,7 +172,13 @@ function tabCloseEven() {
     })
 }
 
-//弹出信息窗口 title:标题 msgString:提示信息 msgType:信息类型 [error,info,question,warning]
-function msgShow(title, msgString, msgType) {
-    $.messager.alert(title, msgString, msgType);
+// 正则表达式截取错误信息
+function RegexErrorMsg(str) {
+    var reg = /<title>(.+)<\/title>/g;
+    var msg = reg.exec(str)[1];
+    if (msg != undefined) {
+        return ":" + msg;
+    } else {
+        return "";
+    }
 }
