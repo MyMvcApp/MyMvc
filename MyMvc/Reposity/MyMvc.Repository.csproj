@@ -53,6 +53,7 @@
     <Compile Include="RepositoryEnd\AdminUserRepository.cs" />
     <Compile Include="Repository\PagedPeoPleRepository.cs" />
     <Compile Include="Repository\StudentRepository.cs" />
+    <Compile Include="Transaction.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyMvc.Context\MyMvc.Context.csproj">
