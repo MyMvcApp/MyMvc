@@ -5,8 +5,9 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
-using MyMvc.Context;
+using System.Web.Optimization;
 using System.Data.Entity;
+using MyMvc.Context;
 namespace MyMvcEnd
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -16,7 +17,7 @@ namespace MyMvcEnd
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
