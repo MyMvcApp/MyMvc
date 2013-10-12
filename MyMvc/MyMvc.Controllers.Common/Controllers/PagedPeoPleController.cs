@@ -11,6 +11,7 @@ using MyMvc.Context;
 using MyMvc.ControllerTemplate;
 using System.Linq.Expressions;
 using PagedList;
+using MyMvc.Helper;
 namespace MyMvc.Controllers.Common
 {
     public class PagedPeoPleController : BaseController, IControlerTemplatePaged<PagedPeoPle>
@@ -147,5 +148,60 @@ namespace MyMvc.Controllers.Common
            pagedPeoPleRepository.Dispose();
            base.Dispose(disposing);
        }
+
+        [HttpPost]
+       public JsonResult PagedPeoPleManage(PagedPeoPle pagedPeoPle) 
+       {
+           // TODO:数据库的业务逻辑处理
+           try
+           {
+               if (pagedPeoPle.PagedPeoPleID != 0)
+               {
+                   // TODO:修改处理
+                   pagedPeoPleRepository.Update(pagedPeoPle);
+               }
+               else
+               {
+                   pagedPeoPleRepository.Create(pagedPeoPle);
+               }
+
+               return Json(new Result() { code = "success" });
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+           }
+       }
+
+        [HttpPost]
+        public JsonResult DelPagedPeoPleById(int id)
+        {
+            try
+            {
+                Result ret = new Result();
+                pagedPeoPleRepository.Delete(id);
+                ret.code = "success";
+                return Json(ret);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetPagedPeoPleList(string page, string rows)
+        {
+            Func<IQueryable<PagedPeoPle>, IOrderedQueryable<PagedPeoPle>> orderby
+                = new Func<IQueryable<PagedPeoPle>, IOrderedQueryable<PagedPeoPle>>(q => q.OrderBy(s => s.PagedPeoPleID));
+            return Json(pagedPeoPleRepository.GetPagedData(orderBy: orderby, pageSize: Convert.ToInt32(rows), pageNumber: Convert.ToInt32(page)));
+        }
+
+        [HttpGet]
+        public ActionResult PagedPeopleEnd() 
+        {
+            return View();
+        }
+
     }
 }

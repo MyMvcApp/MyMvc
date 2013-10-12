@@ -1,0 +1,163 @@
+﻿@model MyMvc.Models.Models.PagedPeoPle
+
+<table id="dg" class="easyui-datagrid" border="0" pagination="true" fit="true"
+    data-options="
+                singleSelect: true,
+                toolbar: '#tb',
+                onClickRow: onClickRow,
+                remoteSort:false,
+                multiSort:false,
+                sortName:'PagedPeoPleID',
+                url:'PagedPeoPle/GetPagedPeoPleList'">
+    <thead>
+        <tr>
+            <th data-options="field:'PagedPeoPleID',width:80,sortable:true">ID</th>
+            <th data-options="field:'Name',width:80,sortable:true">姓名</th>
+            <th data-options="field:'Age',width:100,sortable:true">年龄</th>
+            <th data-options="field:'Sex',width:100,sortable:true,formatter:formatter">性别</th>
+        </tr>
+    </thead>
+</table>
+<div id="tb" style="height: auto">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addit()">添加</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editit()">修改</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+</div>
+<div id="userWin" class="easyui-window" title="用户信息" data-options="modal:true,closed:true,iconCls:'icon-save',inline:true"
+    style="width: 350px; height: 250px; padding: 10px;">
+    <div style="padding: 10px 0 10px 35px">
+        @using (Ajax.BeginForm("PagedPeoPleManage", "PagedPeoPle",
+            new AjaxOptions { OnSuccess = "Success", OnFailure = "Failure" },
+            new { @id = "PagedPeoPleForm" }))
+        {
+            @Html.HiddenFor(m => m.PagedPeoPleID)
+            <table>
+                <tr>
+                    <td>用户姓名:</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.Name, new { @class = "required" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>用户年龄：</td>
+                    <td>
+                        @Html.DropDownListFor(m => m.Age, new[]{
+                                new SelectListItem(){Text = "10",Value = "10", Selected = true },
+                                new SelectListItem(){Text = "20",Value = "20" },
+                                new SelectListItem(){Text = "30",Value = "30"}},
+                                new { @name = "Age", @class = "required",@id="age" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>性别：</td>
+                    <td>
+                      男：@Html.RadioButtonFor(m => m.Sex, "true", new {@name="Sex",@id="sex1",@checked = "checked"})
+                      女：@Html.RadioButtonFor(m => m.Sex, "false", new {@name="Sex",@id="sex2" })
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+    <div style="text-align: center; padding: 5px">
+        <a href="javascript:void(0)" data-options="iconCls:'icon-ok'" class="easyui-linkbutton" onclick="submitForm()">保存</a>
+        <a href="javascript:void(0)" data-options="iconCls:'icon-reload'" class="easyui-linkbutton" onclick="clearForm()">清空</a>
+    </div>
+</div>
+<script type="text/javascript">
+    var objForm = $('#PagedPeoPleForm');
+    $(objForm).validate();
+    var editIndex = undefined;
+    var selectRow = undefined;
+    var rowIndex = undefined;
+
+    function onClickRow(index) {
+        selectRow = $('#dg').datagrid('getSelected');
+        $('#dg').datagrid('getRowIndex', index);
+        rowIndex = index;
+        if (selectRow != undefined) {
+            editIndex = selectRow['PagedPeoPleID'];
+        }
+    }
+    function formatter(value, row, index) {
+        if (value == false) {
+            return "女";
+        } else {
+            return "男";
+        }
+    }
+    function removeit() {
+        if (editIndex == undefined) {
+            $.messager.alert('错误', '当前未选中行', 'error');
+            return;
+        }
+        $.messager.confirm('提醒', '确定要删除此项吗?', function (r) {
+            if (r) {
+                $.ajax({
+                    url: 'PagedPeoPle/DelPagedPeoPleById',
+                    type: "POST",
+                    data: 'id=' + editIndex,
+                    success: function (msg) {
+                        if (msg.code == "success") {
+                            $('#dg').datagrid('deleteRow', rowIndex);
+                            clearCacheData();
+                            $.messager.alert('提示', '操作成功', 'success');
+                        } else {
+                            $.messager.alert('错误', '操作失败:' + msg.message, 'error');
+                        }
+                    },
+                    error: function (msg) {
+                        $.messager.alert('错误', '操作失败' + RegexErrorMsg(msg.responseText), 'error');
+                    }
+                });
+            }
+        });
+    }
+    function addit() {
+        clearvalidatorinfo();
+        $(objForm).form('clear');
+        $("#age").val(10);
+        $("#sex1").attr("checked", "checked");
+        $('#userWin').window('open');
+    }
+    function editit() {
+        if (editIndex == undefined) {
+            $.messager.alert('错误', '当前未选中行', 'error');
+            return;
+        }
+
+        clearvalidatorinfo();
+        $(objForm).form('clear');
+        $(objForm).form('load', selectRow);
+        $(objForm).validate();
+        $('#userWin').window('open');
+    }
+    function clearvalidatorinfo() {
+        $('.errorvalidator').each(function () {
+            $(this).empty();
+        });
+    }
+    function clearCacheData() {
+        editIndex = undefined;
+        selectRow = undefined;
+        rowIndex = undefined;
+    }
+    function Success(data) {
+        if (data.code == "success") {
+            $.messager.alert('提示', '操作成功', 'success');
+            $('#userWin').window('close');
+            $('#dg').datagrid('reload');
+            clearCacheData();
+        } else {
+            $.messager.alert('提示', '操作失败:' + data.message, 'error');
+        }
+    }
+    function Failure(data) {
+        $.messager.alert('提示', '操作失败' + RegexErrorMsg(data.responseText), 'error');
+    }
+    function submitForm() {
+        $(objForm).submit();
+    }
+    function clearForm() {
+        $(objForm).form('clear');
+    }
+</script>
