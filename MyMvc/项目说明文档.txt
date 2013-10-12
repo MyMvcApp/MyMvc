@@ -1,7 +1,9 @@
 ﻿MyMvc  对应的是前台的View项目
 MyMvc.End  对应的是后台的View项目<EasyUI>
 MyMvc.Context  对应的是数据库上下文项目
-MyMvc.Controllers 对应的是控制器项目
+MyMvc.Controllers 对应的是前端的控制器项目
+MyMvc.ControllersEnd 对应的是后端的控制器项目
+MyMvc.Controllers.Common 对应的是前后端公用的控制器项目
 MyMvc.ControllerTemplate 对应的是控制器基本的Action接口模版
 MyMvc.Models 对应的Model
 MyMvc.IRepository  对应的是Repository的接口

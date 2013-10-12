@@ -15,7 +15,8 @@ using MyMvc.Models.ModelsEnd;
 using MyMvc.Repository.RepositoryEnd;
 using System.Web.Security;
 using MyMvc.Helper;
-namespace MyMvc.Controllers.Controllers
+using MyMvc.Controllers.Common;
+namespace MyMvc.ControllersEnd.Controllers
 {
     public class AccountController : BaseController
     {
@@ -62,6 +63,7 @@ namespace MyMvc.Controllers.Controllers
                 {
                     FormsAuthentication.RedirectFromLoginPage(model.AdminName, false);
                     Session["admin"] = model.AdminName;
+                    CurrentEndUser = model;
                     return RedirectToAction("Index", "Home");
                 }
                 else

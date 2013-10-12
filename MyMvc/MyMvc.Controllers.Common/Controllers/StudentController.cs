@@ -7,11 +7,10 @@ using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
 using MyMvc.Models.Models;
-using MyMvc.Repository;
 using MyMvc.Repository.Repository;
 using MyMvc.Context;
 using MyMvc.ControllerTemplate;
-namespace MyMvc.Controllers.Controllers
+namespace MyMvc.Controllers.Common
 {
    public class StudentController : BaseController,IControlerTemplate<Student>
    {

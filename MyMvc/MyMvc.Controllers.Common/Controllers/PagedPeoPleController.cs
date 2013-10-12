@@ -11,7 +11,7 @@ using MyMvc.Context;
 using MyMvc.ControllerTemplate;
 using System.Linq.Expressions;
 using PagedList;
-namespace MyMvc.Controllers.Controllers
+namespace MyMvc.Controllers.Common
 {
     public class PagedPeoPleController : BaseController, IControlerTemplatePaged<PagedPeoPle>
     {

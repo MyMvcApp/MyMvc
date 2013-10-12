@@ -8,8 +8,8 @@ using MyMvc.Context;
 using MyMvc.Helper;
 using MyMvc.Models.ModelsEnd;
 using MyMvc.Repository.RepositoryEnd;
-
-namespace MyMvc.Controllers.Controllers
+using MyMvc.Controllers.Common;
+namespace MyMvc.ControllersEnd.Controllers
 {
     public class ContentController : BaseController
     {

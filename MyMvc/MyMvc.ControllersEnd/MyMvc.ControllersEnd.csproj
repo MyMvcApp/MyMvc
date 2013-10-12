@@ -33,6 +33,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -44,18 +47,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\AdminUserController.cs" />
-    <Compile Include="BaseController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ContentController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyMvc.Context\MyMvc.Context.csproj">
+      <Project>{6f6d34e0-bf3d-4bc3-95d4-538cd8c3aed8}</Project>
+      <Name>MyMvc.Context</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyMvc.Controllers.Common\MyMvc.Controllers.Common.csproj">
+      <Project>{b39c4ece-d915-4683-8788-bd391847b170}</Project>
+      <Name>MyMvc.Controllers.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyMvc.ControllerTemplate\MyMvc.ControllerTemplate.csproj">
       <Project>{a37fb939-705e-459e-9df3-e1067a0e8ed7}</Project>
       <Name>MyMvc.ControllerTemplate</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MyMvc.ModelsEnd\MyMvc.ModelsEnd.csproj">
-      <Project>{460b2517-74c8-4479-87bd-02db38307078}</Project>
-      <Name>MyMvc.ModelsEnd</Name>
+    <ProjectReference Include="..\MyMvc.Helper\MyMvc.Helper.csproj">
+      <Project>{0972c301-5d37-43e8-bb56-fa992d237654}</Project>
+      <Name>MyMvc.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyMvc.IRepository\MyMvc.IRepository.csproj">
+      <Project>{89ab9485-6a80-4b1f-b9d8-45be86365f6e}</Project>
+      <Name>MyMvc.IRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyMvc.Models\MyMvc.Models.csproj">
+      <Project>{d52b2347-965b-451a-ad61-b737555d9395}</Project>
+      <Name>MyMvc.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\Reposity\MyMvc.Repository.csproj">
       <Project>{44533c5f-ed1f-436e-9a6f-0fcc63c08362}</Project>

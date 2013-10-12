@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{990158CB-ADBD-44CB-9137-6973C50E1E5A}</ProjectGuid>
+    <ProjectGuid>{B39C4ECE-D915-4683-8788-BD391847B170}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyMvc.Controllers</RootNamespace>
-    <AssemblyName>MyMvc.Controllers</AssemblyName>
+    <RootNamespace>MyMvc.Controllers.Common</RootNamespace>
+    <AssemblyName>MyMvc.Controllers.Common</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,9 +33,7 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -45,32 +43,24 @@
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="BaseController.cs" />
+    <Compile Include="Controllers\PagedPeoPleController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyMvc.Context\MyMvc.Context.csproj">
       <Project>{6f6d34e0-bf3d-4bc3-95d4-538cd8c3aed8}</Project>
       <Name>MyMvc.Context</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MyMvc.Controllers.Common\MyMvc.Controllers.Common.csproj">
-      <Project>{b39c4ece-d915-4683-8788-bd391847b170}</Project>
-      <Name>MyMvc.Controllers.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MyMvc.ControllerTemplate\MyMvc.ControllerTemplate.csproj">
       <Project>{a37fb939-705e-459e-9df3-e1067a0e8ed7}</Project>
       <Name>MyMvc.ControllerTemplate</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MyMvc.Helper\MyMvc.Helper.csproj">
-      <Project>{0972c301-5d37-43e8-bb56-fa992d237654}</Project>
-      <Name>MyMvc.Helper</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyMvc.IRepository\MyMvc.IRepository.csproj">
       <Project>{89ab9485-6a80-4b1f-b9d8-45be86365f6e}</Project>
@@ -85,7 +75,6 @@
       <Name>MyMvc.Repository</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

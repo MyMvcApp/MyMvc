@@ -426,6 +426,9 @@
     <Content Include="Content\themes\metro\window.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\dealmenu.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <Content Include="Scripts\jquery.easyui.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -447,9 +450,9 @@
       <Project>{6f6d34e0-bf3d-4bc3-95d4-538cd8c3aed8}</Project>
       <Name>MyMvc.Context</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MyMvc.Controllers\MyMvc.Controllers.csproj">
-      <Project>{990158cb-adbd-44cb-9137-6973c50e1e5a}</Project>
-      <Name>MyMvc.Controllers</Name>
+    <ProjectReference Include="..\MyMvc.ControllersEnd\MyMvc.ControllersEnd.csproj">
+      <Project>{9179a002-7344-46ee-95ee-02e6465c4c96}</Project>
+      <Name>MyMvc.ControllersEnd</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyMvc.Models\MyMvc.Models.csproj">
       <Project>{d52b2347-965b-451a-ad61-b737555d9395}</Project>
