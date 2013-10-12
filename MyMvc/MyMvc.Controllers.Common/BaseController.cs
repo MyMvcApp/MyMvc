@@ -39,7 +39,8 @@ namespace MyMvc.Controllers.Common
 
         public ActionResult NotFound() 
         {
-            return View();
+            Response.StatusCode = 404;
+            return View("NotFound");
         }
     }
 }

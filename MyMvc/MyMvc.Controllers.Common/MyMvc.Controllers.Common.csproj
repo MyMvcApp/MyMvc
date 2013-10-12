@@ -51,6 +51,7 @@
     <Compile Include="BaseController.cs" />
     <Compile Include="Controllers\PagedPeoPleController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="ErrorController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
