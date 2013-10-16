@@ -1,5 +1,4 @@
 ﻿@model MyMvc.Models.ModelsEnd.AdminUser
-
 <table id="dg" class="easyui-datagrid" border="0" pagination="true" fit="true"
     data-options="
                 singleSelect: true,
@@ -8,7 +7,7 @@
                 remoteSort:false,
                 multiSort:false,
                 sortName:'AdminUserID',
-                url:'Content/GetUserList'">
+                url:'GetUserList'">
     <thead>
         <tr>
             <th data-options="field:'AdminUserID',width:80,sortable:true">ID</th>
@@ -32,7 +31,6 @@
             new AjaxOptions { OnSuccess = "Success", OnFailure = "Failure" },
             new { @id = "userForm"}))
         {
-            @Html.HiddenFor(m => m.AdminUserID)
             <table>
                 <tr>
                     <td>登录帐号:</td>
@@ -106,15 +104,15 @@
         $.messager.confirm('提醒', '确定要删除此项吗?', function (r) {
             if (r) {
                 $.ajax({
-                    url: 'Content/DelUserById',
+                    url: 'DelUserById',
                     type: "POST",
                     data: 'id=' + editIndex,
                     success: function (msg) {
-                        if (msg.code == "success") {
+                        if (msg.Status == "success") {
                             $('#dg').datagrid('deleteRow', rowIndex);
                             clearCacheData();
                         } else {
-                            $.messager.alert('错误', '操作失败:' + msg.message, 'error');
+                            $.messager.alert('错误', '操作失败:' + msg.Message, 'error');
                         }
                     },
                     error: function (msg) {
@@ -152,13 +150,13 @@
         rowIndex = undefined;
     }
     function Success(data) {
-        if (data.code == "success") {
+        if (data.Status == "success") {
             $.messager.alert('提示', '操作成功', 'success');
             $('#userWin').window('close');
             $('#dg').datagrid('reload');
             clearCacheData();
         } else {
-            $.messager.alert('提示', '操作失败:' + data.message, 'error');
+            $.messager.alert('提示', '操作失败:' + data.Message, 'error');
         }
     }
     function Failure(data) {

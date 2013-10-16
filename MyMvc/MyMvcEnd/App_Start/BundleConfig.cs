@@ -26,7 +26,8 @@ namespace MyMvcEnd
             bundles.Add(new StyleBundle("~/Content/layout/css").Include(
                       "~/Content/themes/default/easyui.css",
                       "~/Content/themes/icon.css",
-                      "~/Content/themes/demo.css"));
+                      "~/Content/themes/demo.css",
+                      "~/Content/common.css"));
         }
     }
 }

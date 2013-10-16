@@ -152,25 +152,27 @@ namespace MyMvc.Controllers.Common
         [HttpPost]
        public JsonResult PagedPeoPleManage(PagedPeoPle pagedPeoPle) 
        {
-           // TODO:数据库的业务逻辑处理
-           try
-           {
-               if (pagedPeoPle.PagedPeoPleID != 0)
+           ResponseResult ret = new ResponseResult();
+           if (!ModelState.IsValid) return Json(Validate()); 
+            // TODO:数据库的业务逻辑处理
+               try
                {
-                   // TODO:修改处理
-                   pagedPeoPleRepository.Update(pagedPeoPle);
+                   if (pagedPeoPle.PagedPeoPleID != 0)
+                   {
+                       // TODO:修改处理
+                       pagedPeoPleRepository.Update(pagedPeoPle);
+                   }
+                   else
+                   {
+                       pagedPeoPleRepository.Create(pagedPeoPle);
+                   }
+                   ret.Status = "success";
+                   return Json(ret);
                }
-               else
+               catch (Exception ex)
                {
-                   pagedPeoPleRepository.Create(pagedPeoPle);
+                   throw ex;
                }
-
-               return Json(new Result() { code = "success" });
-           }
-           catch (Exception ex)
-           {
-               throw ex;
-           }
        }
 
         [HttpPost]
@@ -178,9 +180,9 @@ namespace MyMvc.Controllers.Common
         {
             try
             {
-                Result ret = new Result();
+                ResponseResult ret = new ResponseResult();
                 pagedPeoPleRepository.Delete(id);
-                ret.code = "success";
+                ret.Status = "success";
                 return Json(ret);
             }
             catch (Exception ex)

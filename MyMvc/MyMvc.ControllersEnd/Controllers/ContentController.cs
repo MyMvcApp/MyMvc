@@ -30,7 +30,7 @@ namespace MyMvc.ControllersEnd.Controllers
             // TODO:数据库的业务逻辑处理
             try
             {
-                Result ret = new Result();
+                ResponseResult ret = new ResponseResult();
 
                 if (user.AdminUserID != 0)
                 {
@@ -44,7 +44,7 @@ namespace MyMvc.ControllersEnd.Controllers
                     adminUserRepository.Create(user);
                 }
 
-                ret.code = "success";
+                ret.Status = "success";
                 return Json(ret);
             }
             catch (Exception ex)
@@ -67,10 +67,10 @@ namespace MyMvc.ControllersEnd.Controllers
         {
             try
             {
-                Result ret = new Result();
+                ResponseResult ret = new ResponseResult();
 
                 adminUserRepository.Delete(id);
-                ret.code = "success";
+                ret.Status = "success";
                 return Json(ret);
             }
             catch (Exception ex)
@@ -84,7 +84,7 @@ namespace MyMvc.ControllersEnd.Controllers
         {
             try
             {
-                Result ret = new Result();
+                ResponseResult ret = new ResponseResult();
 
                 if (Session["admin"] != null)
                 {
@@ -102,12 +102,12 @@ namespace MyMvc.ControllersEnd.Controllers
                         AdminUser user = adminUserRepository.GetData(filter: filter).First(m => m.AdminName.Equals(adminName));
                         user.AdminPwd = StringHelper.GetMD5Hash(parm.AdminNewPwd);
                         adminUserRepository.Update(user);
-                        ret.code = "success";
+                        ret.Status = "success";
                     }
                     else
                     {
-                        ret.code = "fail";
-                        ret.message = "原始密码不正确";
+                        ret.Status = "fail";
+                        ret.Message = "原始密码不正确";
                     }
                 }
 

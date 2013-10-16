@@ -53,6 +53,7 @@ namespace MyMvc.ControllersEnd.Controllers
             string msg = "";
             try
             {
+                string p = StringHelper.GetMD5Hash("123");
                 string pwd = StringHelper.GetMD5Hash(model.AdminPwd);
                 Expression<Func<AdminUser, bool>> filter = null;
                 if (!String.IsNullOrWhiteSpace(model.AdminName))
@@ -89,14 +90,14 @@ namespace MyMvc.ControllersEnd.Controllers
         {
             try
             {
-                Result ret = new Result();
+                ResponseResult ret = new ResponseResult();
                 //取消Session会话
                 Session.Abandon();
 
                 //删除Forms验证票证
                 FormsAuthentication.SignOut();
 
-                ret.code = "success";
+                ret.Status = "success";
                 return Json(ret);
             }
             catch(Exception ex)

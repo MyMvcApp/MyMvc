@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
 using MyMvc.Models.ModelsEnd;
+using MyMvc.Helper;
 namespace MyMvc.Controllers.Common
 {
     //在这个基类中存储一些公用的东西
@@ -42,5 +43,29 @@ namespace MyMvc.Controllers.Common
             Response.StatusCode = 404;
             return View("NotFound");
         }
+
+        /// <summary>
+        /// 校验错误信息
+        /// </summary>
+        /// <returns></returns>
+        public ResponseResult Validate() 
+        {
+            string message = string.Empty;
+            if (ModelState.Values.Count > 0)
+            {
+                foreach (var val in ModelState.Values)
+                {
+                    if (val.Errors.Count > 0)
+                    {
+                        foreach (var msg in val.Errors)
+                        {
+                            message += msg.ErrorMessage + "<br/>";
+                        }
+                    }
+                }
+            }
+            return new ResponseResult(){Status="fail",Message = message};
+        }
+
     }
 }

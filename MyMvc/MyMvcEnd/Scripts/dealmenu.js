@@ -2,43 +2,11 @@
     InitLeftMenu();
     tabClose();
     tabCloseEven();
-
-    //$('#tabs').tabs('add',{
-    //	title:'',
-    //	content:createFrame('http://hxling.cnblogs.com')
-    //}).tabs({
-    //    onSelect: function (title) {
-    //        var currTab = $('#tabs').tabs('getTab', title);
-    //        var iframe = $(currTab.panel('options').content);
-
-    //		var src = iframe.attr('src');
-    //		if(src)
-    //			$('#tabs').tabs('update', { tab: currTab, options: { content: createFrame(src)} });
-
-    //    }
-    //});
 })
 
 //初始化左侧
 function InitLeftMenu() {
     $("#nav").accordion({ animate: false });
-
-    //$.each(_menus.menus, function(i, n) {
-    //	var menulist ='';
-    //	menulist +='<ul>';
-    //    $.each(n.menus, function(j, o) {
-    //		menulist += '<li><div><a ref="'+o.menuid+'" href="#" rel="' + o.url + '" ><span class="icon '+o.icon+'" >&nbsp;</span><span class="nav">' + o.menuname + '</span></a></div></li> ';
-    //    })
-    //	menulist += '</ul>';
-
-    //	$('#nav').accordion('add', {
-    //        title: n.menuname,
-    //        content: menulist,
-    //        iconCls: 'icon ' + n.icon
-    //    });
-
-    //});
-
     $('.easyui-accordion li a').click(function () {
         var tabTitle = $(this).children('.nav').text();
 
@@ -62,23 +30,15 @@ function InitLeftMenu() {
 }
 //获取左侧导航的图标
 function getIcon(menuid) {
-    var icon = 'icon icon-user';
-    //$.each(_menus.menus, function(i, n) {
-    //	 $.each(n.menus, function(j, o) {
-    //	 	if(o.menuid==menuid){
-    //			icon += o.icon;
-    //		}
-    //	 })
-    //})
-
-    return icon;
+    return 'icon icon-user';
 }
 
 function addTab(subtitle, url, icon) {
     if (!$('#tabs').tabs('exists', subtitle)) {
+        var content = '<iframe scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:100%;"></iframe>';
         $('#tabs').tabs('add', {
             title: subtitle,
-            href: url,
+            content:content,
             closable: true,
             icon: icon
         });

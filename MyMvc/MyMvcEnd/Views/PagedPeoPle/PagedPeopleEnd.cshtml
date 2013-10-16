@@ -1,5 +1,4 @@
 ﻿@model MyMvc.Models.Models.PagedPeoPle
-
 <table id="dg" class="easyui-datagrid" border="0" pagination="true" fit="true"
     data-options="
                 singleSelect: true,
@@ -8,7 +7,7 @@
                 remoteSort:false,
                 multiSort:false,
                 sortName:'PagedPeoPleID',
-                url:'PagedPeoPle/GetPagedPeoPleList'">
+                url:'GetPagedPeoPleList'">
     <thead>
         <tr>
             <th data-options="field:'PagedPeoPleID',width:80,sortable:true">ID</th>
@@ -23,19 +22,19 @@
     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editit()">修改</a>
     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
 </div>
-<div id="userWin" class="easyui-window" title="用户信息" data-options="modal:true,closed:true,iconCls:'icon-save',inline:true"
+<div id="userWin" class="easyui-window" title="用户信息" data-options="modal:true,closed:true,iconCls:'icon-save',inline:true,onClose:closeWin"
     style="width: 350px; height: 250px; padding: 10px;">
     <div style="padding: 10px 0 10px 35px">
         @using (Ajax.BeginForm("PagedPeoPleManage", "PagedPeoPle",
             new AjaxOptions { OnSuccess = "Success", OnFailure = "Failure" },
             new { @id = "PagedPeoPleForm" }))
         {
-            @Html.HiddenFor(m => m.PagedPeoPleID)
+           
             <table>
                 <tr>
                     <td>用户姓名:</td>
                     <td>
-                        @Html.TextBoxFor(m => m.Name, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.Name, new { @name = "Name" })
                     </td>
                 </tr>
                 <tr>
@@ -56,6 +55,11 @@
                     </td>
                 </tr>
             </table>
+            <script type="text/javascript">
+                if (isEdit) {
+                     @Html.HiddenFor(m => m.PagedPeoPleID)
+                }
+            </script>
         }
     </div>
     <div style="text-align: center; padding: 5px">
@@ -65,7 +69,15 @@
 </div>
 <script type="text/javascript">
     var objForm = $('#PagedPeoPleForm');
-    $(objForm).validate();
+    $("#PagedPeoPleForm").validate({
+        rules: {
+            Name: "required",
+        },
+        messages: {
+            Name: "请输入姓名",
+        }
+    });
+    var isEdit = false;//检验是否是编辑状态.
     var editIndex = undefined;
     var selectRow = undefined;
     var rowIndex = undefined;
@@ -93,16 +105,16 @@
         $.messager.confirm('提醒', '确定要删除此项吗?', function (r) {
             if (r) {
                 $.ajax({
-                    url: 'PagedPeoPle/DelPagedPeoPleById',
+                    url: 'DelPagedPeoPleById',
                     type: "POST",
                     data: 'id=' + editIndex,
                     success: function (msg) {
-                        if (msg.code == "success") {
+                        if (msg.Status == "success") {
                             $('#dg').datagrid('deleteRow', rowIndex);
                             clearCacheData();
                             $.messager.alert('提示', '操作成功', 'success');
                         } else {
-                            $.messager.alert('错误', '操作失败:' + msg.message, 'error');
+                            $.messager.alert('错误', '操作失败:' + msg.Message, 'error');
                         }
                     },
                     error: function (msg) {
@@ -124,11 +136,10 @@
             $.messager.alert('错误', '当前未选中行', 'error');
             return;
         }
-
+        isEdit = true;
         clearvalidatorinfo();
         $(objForm).form('clear');
         $(objForm).form('load', selectRow);
-        $(objForm).validate();
         $('#userWin').window('open');
     }
     function clearvalidatorinfo() {
@@ -142,13 +153,13 @@
         rowIndex = undefined;
     }
     function Success(data) {
-        if (data.code == "success") {
+        if (data.Status == "success") {
             $.messager.alert('提示', '操作成功', 'success');
             $('#userWin').window('close');
             $('#dg').datagrid('reload');
             clearCacheData();
         } else {
-            $.messager.alert('提示', '操作失败:' + data.message, 'error');
+            $.messager.alert('提示', '操作失败:' + data.Message, 'error');
         }
     }
     function Failure(data) {
@@ -159,5 +170,10 @@
     }
     function clearForm() {
         $(objForm).form('clear');
+    }
+
+    function closeWin()
+    {
+        if (isEdit) isEdit = false;
     }
 </script>
