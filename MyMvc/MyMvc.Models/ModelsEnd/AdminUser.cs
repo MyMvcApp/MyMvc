@@ -7,9 +7,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyMvc.Models.ModelsEnd
 {
-    public class AdminUser
+    public class AdminUser:BaseModel
     {
-        public int AdminUserID { get; set; }
         [MaxLength(50)]
         public string AdminName { get; set; }
         [MaxLength(50)]
@@ -34,6 +33,14 @@ namespace MyMvc.Models.ModelsEnd
         public string Telephone { get; set; }
 
         public string QQ { get; set; }
+
+        /// <summary>
+        /// 管理员登录日志
+        /// </summary>
+        public virtual ICollection<AdminLoginLog> AdminLoginLogs { get; set; }
+
+        public virtual ICollection<AdminAuthority> AdminAuthoritys { get; set; }
+
     }
 
     public class UpdatePwdParm

@@ -12,14 +12,16 @@ using MyMvc.ControllerTemplate;
 using System.Linq.Expressions;
 using PagedList;
 using MyMvc.Helper;
+using MyMvc.IRepository.Repository;
 namespace MyMvc.Controllers.Common
 {
-    public class PagedPeoPleController : BaseController, IControlerTemplatePaged<PagedPeoPle>
+    public class PagedPeoPleController : BaseEndCRUDController<PagedPeoPle,MyMvcContext>, IControlerTemplatePaged<PagedPeoPle>
     {
-       private PagedPeoPleRepository pagedPeoPleRepository;
+        private IPagedPeoPleRepository pagedPeoPleRepository;
        public PagedPeoPleController() 
        {
            pagedPeoPleRepository = new PagedPeoPleRepository(new MyMvcContext());
+           BaseReposity = pagedPeoPleRepository;
        }
 
        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page, int pageSize=1)
@@ -135,13 +137,13 @@ namespace MyMvc.Controllers.Common
        //
        // POST: /PagedPeoPle/Delete/5
 
-       [HttpPost, ActionName("Delete")]
-       public ActionResult DeleteConfirmed(int id)
-       {
-           PagedPeoPle pagedPeoPle = pagedPeoPleRepository.GetByID(id);
-           pagedPeoPleRepository.Delete(pagedPeoPle);
-           return RedirectToAction("Index");
-       }
+       //[HttpPost, ActionName("Delete")]
+       //public ActionResult DeleteConfirmed(int id)
+       //{
+       //    PagedPeoPle pagedPeoPle = pagedPeoPleRepository.GetByID(id);
+       //    pagedPeoPleRepository.Delete(pagedPeoPle);
+       //    return RedirectToAction("Index");
+       //}
 
        protected override void Dispose(bool disposing)
        {
@@ -149,61 +151,10 @@ namespace MyMvc.Controllers.Common
            base.Dispose(disposing);
        }
 
-        [HttpPost]
-       public JsonResult PagedPeoPleManage(PagedPeoPle pagedPeoPle) 
-       {
-           ResponseResult ret = new ResponseResult();
-           if (!ModelState.IsValid) return Json(Validate()); 
-            // TODO:数据库的业务逻辑处理
-               try
-               {
-                   if (pagedPeoPle.PagedPeoPleID != 0)
-                   {
-                       // TODO:修改处理
-                       pagedPeoPleRepository.Update(pagedPeoPle);
-                   }
-                   else
-                   {
-                       pagedPeoPleRepository.Create(pagedPeoPle);
-                   }
-                   ret.Status = "success";
-                   return Json(ret);
-               }
-               catch (Exception ex)
-               {
-                   throw ex;
-               }
-       }
-
-        [HttpPost]
-        public JsonResult DelPagedPeoPleById(int id)
-        {
-            try
-            {
-                ResponseResult ret = new ResponseResult();
-                pagedPeoPleRepository.Delete(id);
-                ret.Status = "success";
-                return Json(ret);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        [HttpPost]
-        public JsonResult GetPagedPeoPleList(string page, string rows)
-        {
-            Func<IQueryable<PagedPeoPle>, IOrderedQueryable<PagedPeoPle>> orderby
-                = new Func<IQueryable<PagedPeoPle>, IOrderedQueryable<PagedPeoPle>>(q => q.OrderBy(s => s.PagedPeoPleID));
-            return Json(pagedPeoPleRepository.GetPagedData(orderBy: orderby, pageSize: Convert.ToInt32(rows), pageNumber: Convert.ToInt32(page)));
-        }
-
         [HttpGet]
         public ActionResult PagedPeopleEnd() 
         {
             return View();
         }
-
     }
 }

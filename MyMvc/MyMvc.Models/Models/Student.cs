@@ -7,9 +7,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyMvc.Models.Models
 {
-    public class Student
+    public class Student : BaseModel
     {
-        public int StudentID { get; set; }
         [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; }
 

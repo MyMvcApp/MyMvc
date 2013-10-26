@@ -1,4 +1,8 @@
 ﻿@model MyMvc.Models.ModelsEnd.AdminUser
+@section currentPageJs{
+        @Scripts.Render("~/Scripts/commonPage.js")
+        @Scripts.Render("~/Scripts/ContentScript/userManage.js")
+}
 <table id="dg" class="easyui-datagrid" border="0" pagination="true" fit="true"
     data-options="
                 singleSelect: true,
@@ -6,11 +10,10 @@
                 onClickRow: onClickRow,
                 remoteSort:false,
                 multiSort:false,
-                sortName:'AdminUserID',
-                url:'GetUserList'">
+                url:'GetDataList'">
     <thead>
         <tr>
-            <th data-options="field:'AdminUserID',width:80,sortable:true">ID</th>
+            <th data-options="field:'ID',width:80,sortable:true">ID</th>
             <th data-options="field:'RealName',width:80,sortable:true">姓名</th>
             <th data-options="field:'AdminName',width:100,sortable:true">登录名</th>
             <th data-options="field:'Telephone',width:100,sortable:true">电话</th>
@@ -20,15 +23,18 @@
     </thead>
 </table>
 <div id="tb" style="height: auto">
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addit()">添加</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editit()">修改</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+ <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addData()">添加</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editData()">修改</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="delData()">删除</a>
+     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="openAdminLog()">查看登录日志</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="deliverAuthority()">分配权限</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="readAuthority()">查看权限</a>
 </div>
-<div id="userWin" class="easyui-window" title="员工信息" data-options="modal:true,closed:true,iconCls:'icon-save',inline:true"
+<div id="userWin" class="easyui-window" title="员工信息" data-options="modal:true,closed:true,iconCls:'icon-save'"
     style="width: 350px; height: 250px; padding: 10px;">
     <div style="padding: 10px 0 10px 35px">
-        @using (Ajax.BeginForm("UserManage", "Content",
-            new AjaxOptions { OnSuccess = "Success", OnFailure = "Failure" },
+        @using (Ajax.BeginForm("CreateOrUpdate", "Content",
+            new AjaxOptions { OnSuccess = "success", OnFailure = "failure" },
             new { @id = "userForm"}))
         {
             <table>
@@ -56,7 +62,7 @@
                 <tr>
                     <td>手机号码：</td>
                     <td>
-                        @Html.TextBoxFor(m => m.Telephone, new { @class = "digits1" })
+                        @Html.TextBoxFor(m => m.Telephone, new {@name="Telephone",@maxlength="11"})
                     </td>
                 </tr>
 
@@ -74,98 +80,3 @@
         <a href="javascript:void(0)" data-options="iconCls:'icon-reload'" class="easyui-linkbutton" onclick="clearForm()">清空</a>
     </div>
 </div>
-<script type="text/javascript">
-    var objForm = $('#userForm');
-    $(objForm).validate();
-    var editIndex = undefined;
-    var selectRow = undefined;
-    var rowIndex = undefined;
-
-    function onClickRow(index) {
-        selectRow = $('#dg').datagrid('getSelected');
-        $('#dg').datagrid('getRowIndex', index);
-        rowIndex = index;
-        if (selectRow != undefined) {
-            editIndex = selectRow['AdminUserID'];
-        }
-    }
-    function formatter(value, row, index) {
-        if (value == "0") {
-            return "超级管理员";
-        } else {
-            return "普通管理员";
-        }
-    }
-    function removeit() {
-        if (editIndex == undefined) {
-            $.messager.alert('错误', '当前未选中行', 'error');
-            return;
-        }
-        $.messager.confirm('提醒', '确定要删除此项吗?', function (r) {
-            if (r) {
-                $.ajax({
-                    url: 'DelUserById',
-                    type: "POST",
-                    data: 'id=' + editIndex,
-                    success: function (msg) {
-                        if (msg.Status == "success") {
-                            $('#dg').datagrid('deleteRow', rowIndex);
-                            clearCacheData();
-                        } else {
-                            $.messager.alert('错误', '操作失败:' + msg.Message, 'error');
-                        }
-                    },
-                    error: function (msg) {
-                        $.messager.alert('错误', '操作失败' + RegexErrorMsg(msg.responseText), 'error');
-                    }
-                });
-            }
-        });
-    }
-    function addit() {
-        clearvalidatorinfo();
-        $(objForm).form('clear');
-        $('#userWin').window('open');
-    }
-    function editit() {
-        if (editIndex == undefined) {
-            $.messager.alert('错误', '当前未选中行', 'error');
-            return;
-        }
-
-        clearvalidatorinfo();
-        $(objForm).form('clear');
-        $(objForm).form('load', selectRow);
-        $(objForm).validate();
-        $('#userWin').window('open');
-    }
-    function clearvalidatorinfo() {
-        $('.errorvalidator').each(function () {
-            $(this).empty();
-        });
-    }
-    function clearCacheData() {
-        editIndex = undefined;
-        selectRow = undefined;
-        rowIndex = undefined;
-    }
-    function Success(data) {
-        if (data.Status == "success") {
-            $.messager.alert('提示', '操作成功', 'success');
-            $('#userWin').window('close');
-            $('#dg').datagrid('reload');
-            clearCacheData();
-        } else {
-            $.messager.alert('提示', '操作失败:' + data.Message, 'error');
-        }
-    }
-    function Failure(data) {
-        $.messager.alert('提示', '操作失败' + RegexErrorMsg(data.responseText), 'error');
-    }
-    function submitForm() {
-        $(objForm).submit();
-    }
-    function clearForm() {
-        $(objForm).form('clear');
-    }
-</script>

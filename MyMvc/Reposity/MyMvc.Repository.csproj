@@ -33,6 +33,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
@@ -50,6 +53,9 @@
     <Compile Include="BaseRepository.cs" />
     <Compile Include="GenericRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryEnd\AdminAuthorityRepository.cs" />
+    <Compile Include="RepositoryEnd\AdminLoginLogRepository.cs" />
+    <Compile Include="RepositoryEnd\AdminModuleRepository.cs" />
     <Compile Include="RepositoryEnd\AdminUserRepository.cs" />
     <Compile Include="Repository\PagedPeoPleRepository.cs" />
     <Compile Include="Repository\StudentRepository.cs" />

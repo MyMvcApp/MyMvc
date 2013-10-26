@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MyMvc.Controllers.Common;
+using Newtonsoft.Json;
 namespace MyMvc.ControllersEnd.Controllers
 {
     public class HomeController : BaseController
@@ -16,6 +17,11 @@ namespace MyMvc.ControllersEnd.Controllers
                 if (Session["admin"] != null)
                 {
                     ViewBag.LoginName = Session["admin"];
+                    ViewBag.User = JsonConvert.SerializeObject(new { AdminUserID = CurrentEndUser.ID,
+                                                                     AdminName = CurrentEndUser.AdminName,
+                                                                     RealName = CurrentEndUser.RealName,
+                                                                     AdminType = CurrentEndUser.AdminType
+                    });
                     return View();
                 }
             }

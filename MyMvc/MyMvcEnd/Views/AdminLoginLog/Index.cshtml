@@ -1,0 +1,19 @@
+﻿@model MyMvc.Models.ModelsEnd.AdminLoginLog
+@section currentPageJs{
+        @Scripts.Render("~/Scripts/ContentScript/adminLoginLog.js")
+}
+<table id="dg" border="0" pagination="true" fit="true"
+     data-options=" singleSelect: true,
+                remoteSort:false,
+                multiSort:false">
+    <thead>
+        <tr>
+            <th data-options="field:'ID',width:100,sortable:true">ID</th>
+            <th data-options="field:'AdminName',width:100,sortable:true">登录人</th>
+            <th data-options="field:'AdminLoginTime',width:100,sortable:true,formatter:formatter">登录时间</th>
+            <th data-options="field:'AdminLoginIP',width:100,sortable:true">登录IP</th>
+        </tr>
+    </thead>
+</table>
+
+

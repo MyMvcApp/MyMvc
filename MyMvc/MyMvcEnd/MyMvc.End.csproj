@@ -433,11 +433,21 @@
     <Content Include="Content\themes\metro\validatebox.css" />
     <Content Include="Content\themes\metro\window.css" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\dealmenu.js" />
+    <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\commonPage.js" />
+    <Content Include="Scripts\ContentScript\AdminAuthority.js" />
+    <Content Include="Scripts\ContentScript\adminLoginLog.js" />
+    <Content Include="Scripts\ContentScript\AdminModule.js" />
+    <Content Include="Scripts\ContentScript\AdminUserAuthority.js" />
+    <Content Include="Scripts\ContentScript\people.js" />
+    <Content Include="Scripts\ContentScript\userManage.js" />
+    <Content Include="Scripts\menu.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.easyui.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\Top.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -471,7 +481,6 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Content\UserManage.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Login.cshtml" />
   </ItemGroup>
@@ -498,13 +507,22 @@
     <Content Include="Views\PagedPeoPle\PagedPeopleEnd.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_ErrorLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\_ContentLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AdminLoginLog\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AdminModule\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AdminAuthority\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AdminAuthority\AdminUserAuthority.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

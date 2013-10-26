@@ -3,12 +3,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
-    <title>应用程序后台内容页</title>
+    <title>@ViewBag.Title-应用程序后台内容页</title>
     <meta name="viewport" content="width=device-width" />
     @Styles.Render("~/Content/layout/css")
-    @Scripts.Render("~/bundles/layout")
+    @Scripts.Render("~/bundles/content")
 </head>
-<body>
+<body class="panel-noscroll">
      @RenderBody()
+     @RenderSection("currentPageJs",false)
 </body>
 </html>

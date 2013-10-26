@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBaseRepository.cs" />
+    <Compile Include="RepositoryEnd\IAdminAuthorityRepository.cs" />
+    <Compile Include="RepositoryEnd\IAdminLoginLogRepository.cs" />
+    <Compile Include="RepositoryEnd\IAdminModuleRepository.cs" />
     <Compile Include="RepositoryEnd\IAdminUserRepository.cs" />
     <Compile Include="Repository\IPagedPeoPleRepository.cs" />
     <Compile Include="Repository\IStudentRepository.cs" />

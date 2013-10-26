@@ -16,14 +16,18 @@ using MyMvc.Repository.RepositoryEnd;
 using System.Web.Security;
 using MyMvc.Helper;
 using MyMvc.Controllers.Common;
+using MyMvc.IRepository.RepositoryEnd;
 namespace MyMvc.ControllersEnd.Controllers
 {
     public class AccountController : BaseController
     {
-        private AdminUserRepository adminUserRepository;
+        private IAdminUserRepository adminUserRepository;
+        private IAdminLoginLogRepository adminLoginLogRepository;
         public AccountController()
         {
-            adminUserRepository = new AdminUserRepository(new MyMvcContext());
+            MyMvcContext context = new MyMvcContext();
+            adminUserRepository = new AdminUserRepository(context);
+            adminLoginLogRepository = new AdminLoginLogRepository(context);
         }
 
         [HttpGet]
@@ -53,18 +57,23 @@ namespace MyMvc.ControllersEnd.Controllers
             string msg = "";
             try
             {
-                string p = StringHelper.GetMD5Hash("123");
-                string pwd = StringHelper.GetMD5Hash(model.AdminPwd);
+                string pwd = WebHelper.GetMD5Hash(model.AdminPwd);
                 Expression<Func<AdminUser, bool>> filter = null;
                 if (!String.IsNullOrWhiteSpace(model.AdminName))
                     filter = d => d.AdminName.ToUpper().Equals(model.AdminName.ToUpper())
                         && d.AdminPwd.ToUpper().Equals(pwd);
-
-                if (adminUserRepository.GetData(filter: filter).Count() > 0)
+                var adminUser = adminUserRepository.GetData(filter: filter).FirstOrDefault();
+                if (adminUser!=null)
                 {
                     FormsAuthentication.RedirectFromLoginPage(model.AdminName, false);
                     Session["admin"] = model.AdminName;
-                    CurrentEndUser = model;
+                    CurrentEndUser = adminUser;
+                    AdminLoginLog log = new AdminLoginLog();
+                    log.AdminUser = adminUser;
+                    log.AdminLoginTime = DateTime.Now;
+                    log.AdminLoginIP = WebHelper.GetIP();
+                    log.AdminUserID = adminUser.ID;
+                    adminLoginLogRepository.Create(log);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -88,12 +97,11 @@ namespace MyMvc.ControllersEnd.Controllers
         [HttpPost]
         public JsonResult Logout()
         {
+            ResponseResult ret = new ResponseResult();
             try
             {
-                ResponseResult ret = new ResponseResult();
                 //取消Session会话
                 Session.Abandon();
-
                 //删除Forms验证票证
                 FormsAuthentication.SignOut();
 

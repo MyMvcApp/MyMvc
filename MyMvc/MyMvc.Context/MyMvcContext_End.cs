@@ -13,5 +13,8 @@ namespace MyMvc.Context
     public partial class MyMvcContext
     {
         public DbSet<AdminUser> AdminUser { get; set; }
+        public DbSet<AdminLoginLog> AdminLoginLog { get; set; }
+        public DbSet<AdminAuthority> AdminAuthority { get; set; }
+        public DbSet<AdminModule> AdminModule { get; set; }
     }
 }

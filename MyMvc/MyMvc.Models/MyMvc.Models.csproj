@@ -40,6 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseModel.cs" />
+    <Compile Include="ModelsEnd\AdminAuthority.cs" />
+    <Compile Include="ModelsEnd\AdminLoginLog.cs" />
+    <Compile Include="ModelsEnd\AdminModule.cs" />
     <Compile Include="ModelsEnd\AdminUser.cs" />
     <Compile Include="Models\PagedPeoPle.cs" />
     <Compile Include="Models\Student.cs" />

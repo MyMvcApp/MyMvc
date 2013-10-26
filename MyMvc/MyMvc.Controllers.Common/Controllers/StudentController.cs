@@ -10,14 +10,16 @@ using MyMvc.Models.Models;
 using MyMvc.Repository.Repository;
 using MyMvc.Context;
 using MyMvc.ControllerTemplate;
+using MyMvc.IRepository.Repository;
 namespace MyMvc.Controllers.Common
 {
-   public class StudentController : BaseController,IControlerTemplate<Student>
+   public class StudentController : BaseEndCRUDController<Student,MyMvcContext>,IControlerTemplate<Student>
    {
-       private StudentRepository studentRepository;
+       private IStudentRepository studentRepository;
        public StudentController() 
        {
            studentRepository = new StudentRepository(new MyMvcContext());
+           BaseReposity = studentRepository;
        }
        
        public ActionResult Index()

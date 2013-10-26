@@ -8,7 +8,7 @@ using System.Web.Security;
 
 namespace MyMvc.Helper
 {
-    public class StringHelper
+    public class WebHelper
     {
         /// <summary>
         /// md5加密方法
@@ -25,6 +25,21 @@ namespace MyMvc.Helper
             {
                 return "";
             }
-        } 
+        }
+
+        /// <summary>
+        /// 获取IP地址
+        /// </summary>
+        /// <returns>IP地址</returns>
+        public static string GetIP()
+        {
+            string IP;
+            if (System.Web.HttpContext.Current.Request.ServerVariables["HTTP_VIA"] != null)
+            {
+                IP = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"].ToString();
+            }
+            IP = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"].ToString();
+            return IP;
+        }
     }
 }

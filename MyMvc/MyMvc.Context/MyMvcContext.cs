@@ -18,5 +18,10 @@ namespace MyMvc.Context
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+
+        public MyMvcContext() 
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+        }
     }
 }

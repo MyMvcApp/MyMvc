@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq.Expressions;
 using System.Data;
 using PagedList;
+using System.Web.Mvc;
 
 namespace MyMvc.IRepository
 {
@@ -39,6 +40,21 @@ namespace MyMvc.IRepository
          string includeProperties = "",
          int pageSize = 10,
          int pageNumber = 1);
+        /// <summary>
+        /// 分页查询数据，用于直接输出Json格式数据
+        /// </summary>
+        /// <param name="filter">过滤条件lambda表达式</param>
+        /// <param name="orderBy">排序条件lambda表达式</param>
+        /// <param name="includeProperties">查询当中需要包括的子查询的属性名称</param>
+        /// <param name="pageSize">每页显示的条数，默认10</param>
+        /// <param name="pageNumber">当前页码，默认1</param>
+        /// <returns></returns>
+         JsonResult GetPagedJsonData(
+          Expression<Func<TEntity, bool>> filter = null,
+          Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+          string includeProperties = "",
+          int pageSize = 10,
+          int pageNumber = 1);
         /// <summary>
         /// 使用原始Sql语句进行查询
         /// </summary>
@@ -85,5 +101,9 @@ namespace MyMvc.IRepository
         /// </summary>
         /// <param name="disposing"></param>
          void Dispose(bool disposing);
+        /// <summary>
+        /// 释放资源
+        /// </summary>
+         void Dispose();
     }
 }

@@ -29,7 +29,7 @@
     style="width: 350px; height: 180px; padding: 10px;">
     <div style="padding: 10px 0 10px 35px">
         @using (Ajax.BeginForm("UpdatePwd","Content","",
-            new AjaxOptions { OnSuccess = "Success", OnFailure = "Failure" },
+            new AjaxOptions { OnSuccess = "success", OnFailure = "failure" },
             new { @id = "updatePwdForm" }))
         {
             <table>
@@ -54,48 +54,8 @@
     </div>
 </div>
 </div>
-<script>
-    $('#updatePwdForm').validate();
-
-    function updatepwd() {
-        $('#updatePwdForm').form('clear');
-        $('#updatePwdWin').window('open');
-    }
-    function exitsys() {
-        $.messager.confirm('提醒', '确定要退出系统吗?', function (r) {
-            if (r) {
-                $.ajax({
-                    url: 'Account/Logout',
-                    type: "POST",
-                    success: function (msg) {
-                        if (msg.code == "success") {
-                            window.location.href = "Account/Login";
-                        } else {
-                            $.messager.alert('错误', '退出失败:' + msg.message, 'error');
-                        }
-                    },
-                    error: function (msg) {
-                        $.messager.alert('错误', '退出失败' + RegexErrorMsg(msg.responseText), 'error');
-                    }
-                });
-            }
-        });
-    }
-    function submitForm() {
-        $('#updatePwdForm').submit();
-    }
-    function clearForm() {
-        $('#updatePwdForm').form('clear');
-    }
-    function Success(data) {
-        if (data.code == "success") {
-            $.messager.alert('提示', '操作成功', 'success');
-            $('#updatePwdWin').window('close');
-        } else {
-            $.messager.alert('提示', '操作失败:' + data.message, 'error');
-        }
-    }
-    function Failure(msg) {
-        $.messager.alert('提示', '操作失败' + RegexErrorMsg(msg.responseText), 'error');
-    }
+@Scripts.Render("~/Scripts/Top.js")
+<script type="text/javascript">
+    //LoginAdminUser存储的是当前后台登录用户信息
+    common.setCookie("LoginAdminUser", "@ViewBag.User".replace(/&quot;/g, "\""));
 </script>

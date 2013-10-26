@@ -1,0 +1,15 @@
+﻿@model MyMvc.Models.ModelsEnd.AdminAuthority
+@section currentPageJs{
+        @Scripts.Render("~/Scripts/ContentScript/AdminUserAuthority.js")
+}
+<table id="dg" border="0" fit="true"
+    data-options="
+                toolbar: '#tb',
+                remoteSort:false,
+                multiSort:false">
+</table>
+<div id="tb" style="height: auto">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="confirmDeliver()">确认分配</a>
+</div>
+
+

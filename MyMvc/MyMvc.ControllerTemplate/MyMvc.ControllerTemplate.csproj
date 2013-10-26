@@ -30,8 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,9 +47,20 @@
     <Compile Include="IControlerCUD.cs" />
     <Compile Include="IControlerTemplate.cs" />
     <Compile Include="IControlerTemplatePaged.cs" />
+    <Compile Include="IControllerEndCRUD.cs" />
     <Compile Include="IControllerR.cs" />
     <Compile Include="IControllerRPaged.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyMvc.IRepository\MyMvc.IRepository.csproj">
+      <Project>{89ab9485-6a80-4b1f-b9d8-45be86365f6e}</Project>
+      <Name>MyMvc.IRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyMvc.Models\MyMvc.Models.csproj">
+      <Project>{d52b2347-965b-451a-ad61-b737555d9395}</Project>
+      <Name>MyMvc.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

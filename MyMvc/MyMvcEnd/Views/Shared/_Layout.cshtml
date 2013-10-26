@@ -13,7 +13,52 @@
         @Html.Partial("Top")
     </div>
     <div data-options="region:'west',split:true" title="导航菜单" style="width: 175px;">
-        @Html.Partial("Menu")
+        <div id="nav" class="easyui-accordion" style="width: 230px;" border="false" fit="true">
+             <div title="基础管理" data-options="iconCls:'icon-sys icon'">
+        <ul>
+            <li>
+                <div class="">
+                    <a href="javascript:void(0)" rel="~/Content/UserManage" ref="12">
+                        <span class="icon icon-user">&nbsp;</span>
+                        <span class="nav">员工列表</span>
+                    </a>
+                </div>
+            </li>
+             <li>
+                <div class="">
+                    <a href="javascript:void(0)" rel="~/PagedPeoPle/PagedPeopleEnd" ref="12">
+                        <span class="icon icon-user">&nbsp;</span>
+                        <span class="nav">用户列表</span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="">
+                    <a href="javascript:void(0)" rel="~/AdminLoginLog/Index" ref="12">
+                        <span class="icon icon-user">&nbsp;</span>
+                        <span class="nav">管理员登录日志</span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="">
+                    <a href="javascript:void(0)" rel="~/AdminModule/Index" ref="13">
+                        <span class="icon icon-user">&nbsp;</span>
+                        <span class="nav">功能模块列表</span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="">
+                    <a href="javascript:void(0)" rel="~/AdminAuthority/Index" ref="13">
+                        <span class="icon icon-user">&nbsp;</span>
+                        <span class="nav">权限列表</span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+        </div>
     </div>
     <div id="body" data-options="region:'center',title:''">
         @RenderBody()

@@ -6,10 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyMvc.Models.Models
 {
-    public class PagedPeoPle
+    public class PagedPeoPle:BaseModel
     {
-        public int PagedPeoPleID { get; set; }
-
         [Required(ErrorMessage="人员的名称不能为空！")]
         public string Name { get; set; }
         [Required(ErrorMessage = "人员的年龄不能为空！")]

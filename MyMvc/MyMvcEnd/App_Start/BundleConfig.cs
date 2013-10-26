@@ -18,7 +18,16 @@ namespace MyMvcEnd
                         "~/Scripts/jquery.unobtrusive-ajax.js",
                         "~/Scripts/jquery.easyui.js",
                         "~/Scripts/jquery.validate.js",
-                        "~/Scripts/dealmenu.js"));
+                         "~/Scripts/jquery.cookie.js",
+                         "~/Scripts/common.js",
+                        "~/Scripts/menu.js"));
+            bundles.Add(new ScriptBundle("~/bundles/content").Include(
+                        "~/Scripts/jquery-1.7.1.js",
+                        "~/Scripts/jquery.unobtrusive-ajax.js",
+                        "~/Scripts/jquery.easyui.js",
+                        "~/Scripts/jquery.validate.js",
+                         "~/Scripts/jquery.cookie.js",
+                        "~/Scripts/common.js"));
 
             bundles.Add(new StyleBundle("~/Content/login/css").Include(
                         "~/Content/themes/default/easyui.css",
