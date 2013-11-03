@@ -459,6 +459,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UpImgs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -523,6 +524,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\AdminAuthority\AdminUserAuthority.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ImageUpload\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,18 @@
+﻿<h2>图片上传</h2>
+@using (Ajax.BeginForm("Upload", "ImageUpload", new AjaxOptions { HttpMethod = "POST" }, new {id = "upForm", enctype = "multipart/form-data" }))
+{ 
+    <div>
+        <input type="file" name="File1" size="30" /><br />
+        <input type="file" name="File2" size="30" /><br />
+        <input type="file" name="File3" size="30" /><br />
+        <input type="file" name="File4" size="30" /><br />
+        <input type="button" value="上传"  onclick="upload()"/>
+    </div>
+}
+<script>
+
+    function upload() {
+        document.forms["upForm"].submit();// 不能使用type="submit"的提交方式，只能这样的方式实现异步提交，同步确可以。
+    }
+
+</script>
